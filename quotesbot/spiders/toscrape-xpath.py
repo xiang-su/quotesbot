@@ -9,12 +9,14 @@ class ToScrapeSpiderXPath(scrapy.Spider):
     ]
 
     def parse(self, response):
-        for atricle in response.xpath('//article[@class="post post-type-normal"]'):
-            yield {
+        for atricle in response.xpath('//article[@class="post post-type-normal "]'):
+            item = {
                 'title': atricle.xpath('.//a[@class="post-title-link"]/text()').extract_first(),
                 'date': atricle.xpath('.//time/text()').extract_first(),
                 'content': atricle.xpath('./div/p/text()').extract()
             }
+            print(item)
+            yield item
 
         # next_page_url = response.xpath('//a[@class="page-number"]/@href').extract_first()
         # if next_page_url is not None:
